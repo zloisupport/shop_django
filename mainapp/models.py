@@ -65,3 +65,28 @@ class Customer(models.Model):
     def __str__(self):
         return 'Покупатель {} {}'.format(self.user.first_name, self.user.last_name)
 
+
+class Notebook(Product):
+    diagonal = models.CharField(max_length=255,verbose_name='Диагональ')
+    display_type=  models.CharField(max_length=255,verbose_name='Тип дисплея')
+    processor_freq = models.CharField(max_length=255,verbose_name='Тип процессора')
+    ram = models.CharField(max_length=8,verbose_name='RAM')
+    video = models.CharField(max_length=8,verbose_name='GPU')
+    time_without_change = models.CharField(max_length=23,verbose_name='Время работы от батареи')
+
+    def __str__(self):
+        return "{}:{}".format(self.category.name,self.title)
+
+class SmartPhone(Product):
+    diagonal = models.CharField(max_length=255,verbose_name='Диагональ')
+    display_type=  models.CharField(max_length=255,verbose_name='Тип дисплея')
+    resolution =  models.CharField(max_length=255,verbose_name='Разрешение экрана')
+    accum_volume =  models.CharField(max_length=255,verbose_name='Батарея')
+    ram = models.CharField(max_length=8,verbose_name='RAM')
+    sd = models.BooleanField(default=True,verbose_name='SD')
+    sd_volume_max = models.CharField(max_length=255,verbose_name='максимальный обьем sd')
+    main_cam_mp = models.CharField(max_length=255,verbose_name='Перед камера')
+    frontal_cam_mp = models.CharField(max_length=255,verbose_name='Фронт камера')
+
+    def __str__(self):
+        return "{}:{}".format(self.category.name,self.title)
