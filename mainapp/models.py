@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey
 User = get_user_model()
 
 #product
@@ -27,13 +28,21 @@ class Product(models.Model):
    price = models.DecimalField(max_digits=9,decimal_places=1,verbose_name='Цена')
    category= models.ForeignKey(Category,verbose_name='Категория',on_delete=models.CASCADE)
 
+   class Meta:
+       abstract = True
+
    def __str__(self):
        return  self.title
+
+# class NoteBookProduct(models.Model):
+#     pass
 
 class CardProduct(models.Model):
     user = models.ForeignKey('Customer',verbose_name='ПОкупатель',on_delete=models.CASCADE)
     cart = models.ForeignKey('Cart',verbose_name='Корзина',on_delete=models.CASCADE,related_name='related_product')
-    product = models.ForeignKey(Product,verbose_name='Товар',on_delete=models.CASCADE)
+    content_type= models.ForeignKey(ContentType,on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_obj = GenericForeignKey('content_type','object_id')
     qty = models.PositiveIntegerField(default=1)
     total_price=models.DecimalField(max_digits=9,decimal_places=1,verbose_name='Общая Цена')
 
